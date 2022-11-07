@@ -4,7 +4,7 @@ const { Review } = require("../models/reviews.model")
 
 module.exports.findAll = (req,res) => {
     Pokemon.find()
-        .then((all)=>res.json({pokemon:all}))
+        .then((all)=>res.json({pokemones:all}))
         .catch((err)=>res.json({message:"Algo salio mal",error:err}))
 }
 

@@ -18,7 +18,7 @@ const PokemonSchema = new mongoose.Schema({
       required:[true,"El tipo es obligatorio (back)"],
       minlength:[1, "El tipo es de uno al menos"],
   },
-  salud:{
+  /* salud:{
     type:Number,
     required:[true, "La salud es obligatoria"],
     minlength:[1, "Al menos debe de tener 1 de salud"]
@@ -27,7 +27,7 @@ const PokemonSchema = new mongoose.Schema({
     type:Number,
     required:[true, "El poder es obligatoria"],
     minlength:[1, "Al menos debe de tener 1 de poder"]
-  },
+  }, */
   reviews:[{type:mongoose.Schema.Types.ObjectId,ref:"Review"}]
 },
 {
