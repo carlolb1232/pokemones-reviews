@@ -1,57 +1,48 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import PokemonForm from "../components/PokemonForm";
-import { simplePost } from "../services/simplePost";
-import { useNavigate } from "react-router-dom";
+import { simpleGet } from "../services/simpleGet";
 
 const Main = () => {
-    
+  const [pokemones, setPokemones] = useState([]);
+  const navigate =useNavigate()
 
-    const [pokemones, setPokemones] = useState([]);
-    const [errors, setErrors] = useState([]);
-    const navigate = useNavigate();
+  const getAllPokemon= async () =>{
+    const response = await simpleGet("http://localhost:8000/api/pokemones/")
+    setPokemones(response.data.pokemones)
+  }
 
+  useEffect(() => {
+    getAllPokemon()
+  }, []);
 
-    const crearPokemon = async (values) => {
-        values.tipos = [values.tipo1,values.tipo2, values.tipo3 ] 
-        console.log("VALORES DESDE FORMIK, EN VISTA MAIN", values);
-        const response = await simplePost(
-          "http://localhost:8000/api/pokemones/",
-          values
-        );
-        if (response.data.message === "") {
-            setPokemones([...pokemones, response.data.pokemon]);
-        } else {
-          console.log("ERRORES", response.data);
-          const errorResponse = response.data.errors;
-          console.log("Object keys", Object.keys(errorResponse));
-          const errorArr = [];
-          for (const llave of Object.keys(errorResponse)) {
-            console.log(errorResponse[llave]);
-            errorArr.push(errorResponse[llave].message);
-          }
-          setErrors(errorArr);
-        }
-      };
+  return (
+    <div>
+      <table className="table">
+        <thead>
+          <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Entrenador</th>
+            <th scope="col">Tipos</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {pokemones?.map((pokemon)=>
+          <tr key= {pokemon._id}>
+            <th scope="row"> {pokemon.nombre} </th>
+            <td> {pokemon.entrenador} </td>
+            <td> {pokemon.tipos[0]},{pokemon.tipos[1]},{pokemon.tipos[2]} </td>
+            <td> <button onClick={()=>navigate("/add-review")}>Añadir opinión</button> </td>
+          </tr>
 
+          )}
+        </tbody>
+      </table>
 
-    return (
-        <div>
-           
-      <PokemonForm
-        nombre=""
-        entrenador=""
-        tipo1=""
-        tipo2=""
-        tipo3=""
-        rating=""
-        content=""
-        creatorName=""
-        
-
-        onSubmitProp={crearPokemon}
-      ></PokemonForm>
-        </div>
-    );
-}
+      <Link to={"/create"}>Crear un pokemon</Link>
+    </div>
+  );
+};
 
 export default Main;
