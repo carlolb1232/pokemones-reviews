@@ -14,7 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Main></Main>}></Route>
         <Route path="/create" element={<Create></Create>}></Route>
-        <Route path="/add-review" element={<AddReview></AddReview>}></Route>
+        <Route path="/add-review/:idPokemon" element={<AddReview></AddReview>}></Route>
       </Routes>
     </div>
   );
