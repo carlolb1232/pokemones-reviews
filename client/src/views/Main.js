@@ -33,7 +33,7 @@ const Main = () => {
             <th scope="row"> {pokemon.nombre} </th>
             <td> {pokemon.entrenador} </td>
             <td> {pokemon.tipos[0]},{pokemon.tipos[1]},{pokemon.tipos[2]} </td>
-            <td> <button onClick={()=>navigate(`/add-review/${pokemon._id}`)}>Añadir opinión</button> </td>
+            <td> <button onClick={()=>navigate(`/add-review/${pokemon._id}`)}>Añadir opinión</button> <button onClick={()=>navigate(`/reviews/${pokemon._id}`)}>Ver opiniones</button> </td>
           </tr>
 
           )}
